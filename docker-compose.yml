@@ -1,0 +1,22 @@
+version: "3.3"
+
+services:
+  chat-api:
+    container_name: chat-api
+    restart: always
+    image: node:20.10.0
+    ports:
+      - 5001:3001
+    volumes:
+      - ./:/usr/src/chatting-app
+    working_dir: /usr/src/chatting-app
+
+    networks:
+      - app-network
+
+    # FOR PRODUCTION
+    command: bash -c "rm -rf dist && npm install && npm run build && npm run start:prod"
+
+networks:
+  app-network:
+    driver: bridge
